@@ -6,9 +6,6 @@ import studentRoutes from "./routes/studentRoutes.js";
 
 dotenv.config();
 
-// connect database
-connectDB();
-
 const app = express();
 
 // middleware
@@ -16,26 +13,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// view engine
-app.set("view engine", "ejs");
+// connect database
+connectDB();
 
 // test route
 app.get("/", (req, res) => {
   res.send("Student Management System Running");
 });
 
-// student routes
+// routes
 app.use("/students", studentRoutes);
 
-// port
-const PORT = process.env.PORT || 3000;
-
-// run locally only (not on Vercel)
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
-
-// export for Vercel
 export default app;
